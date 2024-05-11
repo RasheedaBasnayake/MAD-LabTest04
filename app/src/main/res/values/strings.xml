@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">MAD_LabExam04</string>
+    <string name="add_note_button">addNoteButton</string>
+    <string name="add_note">Add Note .</string>
+    <string name="save_icon">saveIcon</string>
+    <string name="enter_the_title">Enter the title..</string>
+    <string name="enter_your_description">Enter your description..</string>
+    <string name="your_notes">Your Notes !</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+    <string name="edit_note">Edit Note..</string>
+</resources>

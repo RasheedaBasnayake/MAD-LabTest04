@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".AddNoteActivity">
+
+    <TextView
+        android:id="@+id/addNoteHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:fontFamily="casual"
+        android:text="@string/add_note"
+        android:textColor="@color/deep_purple"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:ignore="RelativeOverlap"
+    />
+
+    <ImageView
+        android:id="@+id/saveIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/done"
+        app:tint="@color/deep_purple"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/addNoteHeading"
+        android:layout_marginEnd="6dp"
+        android:contentDescription="@string/save_icon"
+    />
+
+    <EditText
+        android:id="@+id/titleEditText"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:hint="@string/enter_the_title"
+        android:padding="13dp"
+        android:textSize="20sp"
+        android:layout_below="@id/addNoteHeading"
+        android:background="@drawable/purple_border"
+        android:layout_marginTop="16dp"
+        android:maxLines="1"
+        android:fontFamily="@font/poppins"
+        tools:ignore="Autofill" />
+
+    <EditText
+        android:id="@+id/contentEditText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top"
+        android:hint="@string/enter_your_description"
+        android:padding="13dp"
+        android:textSize="18sp"
+        android:layout_below="@id/titleEditText"
+        android:background="@drawable/purple_border"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/poppins"
+        tools:ignore="Autofill,TextFields" />
+
+</RelativeLayout>
