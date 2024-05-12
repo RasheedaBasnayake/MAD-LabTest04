@@ -33,7 +33,6 @@ class UpdateNoteActivity : AppCompatActivity() {
             val newContent = binding.updateContentEditText.text.toString()
             val updatedNote = Note(noteId, newTitle, newContent)
             db.updateNote(updatedNote)
-            notesAdapter.refreshData(db.getAllNotes()) // Refresh data here
             finish()
             Toast.makeText(this, "Note Updated !", Toast.LENGTH_SHORT).show()
         }

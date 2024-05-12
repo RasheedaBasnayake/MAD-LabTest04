@@ -76,4 +76,9 @@ class MainActivity : AppCompatActivity() {
         searchJob?.cancel()
         super.onDestroy()
     }
+
+    override fun onResume() {
+        super.onResume()
+        notesAdapter.refreshData(db.getAllNotes())
+    }
 }
