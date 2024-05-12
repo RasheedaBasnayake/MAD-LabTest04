@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.util.Locale
 
 class NotesAdapter(private var notes: List<Note>, context: Context) :
     RecyclerView.Adapter<NotesAdapter.NoteViewHolder>(), Filterable {
@@ -29,10 +30,11 @@ class NotesAdapter(private var notes: List<Note>, context: Context) :
                 if (constraint.isNullOrEmpty()) {
                     filteredList.addAll(notes)
                 } else {
-                    val filterPattern = constraint.toString().toLowerCase().trim()
+                    val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim()
                     for (note in notes) {
-                        if (note.title.toLowerCase().contains(filterPattern) ||
-                            note.content.toLowerCase().contains(filterPattern)) {
+                        if (note.title.lowercase(Locale.getDefault()).contains(filterPattern) ||
+                            note.content.lowercase(Locale.getDefault()).contains(filterPattern)
+                        ) {
                             filteredList.add(note)
                         }
                     }
@@ -42,6 +44,7 @@ class NotesAdapter(private var notes: List<Note>, context: Context) :
                 return filterResults
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 filteredNotes = results?.values as List<Note>
                 notifyDataSetChanged()
@@ -96,7 +99,7 @@ class NotesAdapter(private var notes: List<Note>, context: Context) :
     @SuppressLint("NotifyDataSetChanged")
     fun refreshData(newNotes: List<Note>) {
         notes = newNotes
-        filteredNotes = newNotes // Update filteredNotes as well
+        filteredNotes = newNotes
         notifyDataSetChanged()
     }
 }

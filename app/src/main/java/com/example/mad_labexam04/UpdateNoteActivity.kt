@@ -9,6 +9,7 @@ class UpdateNoteActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUpdateNoteBinding
     private lateinit var db: NoteDatabaseHelper
+    private lateinit var notesAdapter: NotesAdapter
     private var noteId: Int = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +33,10 @@ class UpdateNoteActivity : AppCompatActivity() {
             val newContent = binding.updateContentEditText.text.toString()
             val updatedNote = Note(noteId, newTitle, newContent)
             db.updateNote(updatedNote)
+            notesAdapter.refreshData(db.getAllNotes()) // Refresh data here
             finish()
             Toast.makeText(this, "Note Updated !", Toast.LENGTH_SHORT).show()
         }
+
     }
 }
