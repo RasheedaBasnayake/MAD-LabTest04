@@ -9,4 +9,7 @@
     <string name="title">Title</string>
     <string name="content">Content</string>
     <string name="edit_note">Edit Note..</string>
+    <string name="swipe_left">Swipe left</string>
+    <string name="quicknotes">QuickNotes!</string>
+    <string name="search_notes">Search Notes..</string>
 </resources>

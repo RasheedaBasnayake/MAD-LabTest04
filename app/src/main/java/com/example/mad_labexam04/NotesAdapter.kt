@@ -1,12 +1,14 @@
 package com.example.mad_labexam04
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -14,11 +16,40 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class NotesAdapter(private var notes: List<Note>, context: Context) :
-    RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
+    RecyclerView.Adapter<NotesAdapter.NoteViewHolder>(), Filterable {
 
     private val db: NoteDatabaseHelper = NoteDatabaseHelper(context)
+    private var filteredNotes: List<Note> = notes
 
-    class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    // Implement Filterable interface methods
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val filteredList = mutableListOf<Note>()
+                if (constraint.isNullOrEmpty()) {
+                    filteredList.addAll(notes)
+                } else {
+                    val filterPattern = constraint.toString().toLowerCase().trim()
+                    for (note in notes) {
+                        if (note.title.toLowerCase().contains(filterPattern) ||
+                            note.content.toLowerCase().contains(filterPattern)) {
+                            filteredList.add(note)
+                        }
+                    }
+                }
+                val filterResults = FilterResults()
+                filterResults.values = filteredList
+                return filterResults
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredNotes = results?.values as List<Note>
+                notifyDataSetChanged()
+            }
+        }
+    }
+
+    class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
         val contentTextView: TextView = itemView.findViewById(R.id.contentTextView)
         val updateButton: ImageView = itemView.findViewById(R.id.updateButton)
@@ -30,15 +61,15 @@ class NotesAdapter(private var notes: List<Note>, context: Context) :
         return NoteViewHolder(view)
     }
 
-    override fun getItemCount(): Int = notes.size
+    override fun getItemCount(): Int = filteredNotes.size
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        val note = notes[position]
+        val note = filteredNotes[position]
         holder.titleTextView.text = note.title
         holder.contentTextView.text = note.content
 
-        holder.updateButton.setOnClickListener{
+        holder.updateButton.setOnClickListener {
             val intent = Intent(holder.itemView.context, UpdateNoteActivity::class.java).apply {
                 putExtra("note_id", note.id)
             }
@@ -60,11 +91,12 @@ class NotesAdapter(private var notes: List<Note>, context: Context) :
                 }
                 .show()
         }
-
     }
+
     @SuppressLint("NotifyDataSetChanged")
-    fun refreshData(newNotes: List<Note>){
+    fun refreshData(newNotes: List<Note>) {
         notes = newNotes
+        filteredNotes = newNotes // Update filteredNotes as well
         notifyDataSetChanged()
     }
 }
