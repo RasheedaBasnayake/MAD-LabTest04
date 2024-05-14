@@ -38,14 +38,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Search functionality
+        // Search function
         binding.searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Cancel the previous search job if still running
                 searchJob?.cancel()
-                // Start a new search job with a delay of 300 milliseconds
+
                 searchJob = mainScope.launch {
                     delay(300)
                     filterNotes(s.toString())
@@ -59,7 +58,6 @@ class MainActivity : AppCompatActivity() {
     private fun filterNotes(query: String) {
         val filteredNotes = mutableListOf<Note>()
         if (query.isBlank()) {
-            // If query is empty, display all notes
             filteredNotes.addAll(allNotes)
         } else {
             for (note in allNotes) {
